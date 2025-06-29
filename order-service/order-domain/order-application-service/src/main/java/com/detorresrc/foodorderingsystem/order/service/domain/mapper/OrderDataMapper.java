@@ -3,6 +3,7 @@ package com.detorresrc.foodorderingsystem.order.service.domain.mapper;
 import com.detorresrc.foodorderingsystem.order.service.domain.dto.create.CreateOrderCommand;
 import com.detorresrc.foodorderingsystem.order.service.domain.dto.create.CreateOrderResponse;
 import com.detorresrc.foodorderingsystem.order.service.domain.dto.create.OrderAddress;
+import com.detorresrc.foodorderingsystem.order.service.domain.dto.track.TrackOrderResponse;
 import com.detorresrc.foodorderingsystem.order.service.domain.entity.Order;
 import com.detorresrc.foodorderingsystem.order.service.domain.entity.OrderItem;
 import com.detorresrc.foodorderingsystem.order.service.domain.entity.Product;
@@ -61,10 +62,19 @@ public class OrderDataMapper {
             .build();
     }
 
-    public CreateOrderResponse orderToCreateOrderResponse(Order order) {
+    public CreateOrderResponse orderToCreateOrderResponse(Order order, String message) {
         return CreateOrderResponse.builder()
             .orderTrackingId(order.getTrackingId().getValue())
             .orderStatus(order.getOrderStatus())
+            .message(message)
+            .build();
+    }
+
+    public TrackOrderResponse orderToTrackOrderResponse(Order order) {
+        return TrackOrderResponse.builder()
+            .orderTrackingId(order.getTrackingId().getValue())
+            .orderStatus(order.getOrderStatus())
+            .failureMessages(order.getFailureMessages())
             .build();
     }
 }

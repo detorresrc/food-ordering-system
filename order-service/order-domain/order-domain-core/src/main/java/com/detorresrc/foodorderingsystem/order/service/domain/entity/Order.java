@@ -85,7 +85,7 @@ public class Order extends AggregateRoot<OrderId> {
 
     private Money validateItemPrice(OrderItem item) {
         if(!item.isPriceValid())
-            throw new OrderDomainException("Order item price is invalid: " + item.getId());
+            throw new OrderDomainException("Order item price is invalid");
 
         return item.getSubTotal();
     }
