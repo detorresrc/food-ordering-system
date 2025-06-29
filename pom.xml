@@ -23,15 +23,24 @@
     <modules>
         <module>order-service</module>
         <module>common</module>
+        <module>infrastracture</module>
     </modules>
 
     <properties>
         <maven-colpiler-plugin.version>3.14.0</maven-colpiler-plugin.version>
         <mockito-core.version>5.17.0</mockito-core.version>
+        <spring-kafka.version>3.3.6</spring-kafka.version>
+        <kafka-arvo-serialize.version>8.0.0</kafka-arvo-serialize.version>
+        <avro.version>1.11.3</avro.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>com.detorresrc.foodorderingsystem</groupId>
+                <artifactId>order-domain</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.detorresrc.foodorderingsystem</groupId>
                 <artifactId>order-domain-core</artifactId>
@@ -60,6 +69,26 @@
             <dependency>
                 <groupId>com.detorresrc.foodorderingsystem</groupId>
                 <artifactId>common-domain</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.detorresrc.foodorderingsystem</groupId>
+                <artifactId>kafka-producer</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.detorresrc.foodorderingsystem</groupId>
+                <artifactId>kafka-consumer</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.detorresrc.foodorderingsystem</groupId>
+                <artifactId>kafka-model</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.detorresrc.foodorderingsystem</groupId>
+                <artifactId>kafka-config-data</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
