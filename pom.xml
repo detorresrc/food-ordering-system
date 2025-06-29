@@ -73,6 +73,11 @@
             </dependency>
             <dependency>
                 <groupId>com.detorresrc.foodorderingsystem</groupId>
+                <artifactId>common-application</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.detorresrc.foodorderingsystem</groupId>
                 <artifactId>kafka-producer</artifactId>
                 <version>${project.version}</version>
             </dependency>
