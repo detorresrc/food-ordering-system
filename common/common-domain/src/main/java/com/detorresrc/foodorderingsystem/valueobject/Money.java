@@ -16,6 +16,10 @@ public class Money {
         return value;
     }
 
+    public BigDecimal getAmount() {
+        return value;
+    }
+
     public Boolean isGreaterThanZero() {
         return value != null && value.compareTo(BigDecimal.ZERO) > 0;
     }

@@ -86,6 +86,11 @@
             </dependency>
             <dependency>
                 <groupId>com.detorresrc.foodorderingsystem</groupId>
+                <artifactId>payment-application-service</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.detorresrc.foodorderingsystem</groupId>
                 <artifactId>kafka-producer</artifactId>
                 <version>${project.version}</version>
             </dependency>

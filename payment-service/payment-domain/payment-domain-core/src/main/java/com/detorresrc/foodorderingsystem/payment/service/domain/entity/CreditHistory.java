@@ -20,6 +20,9 @@ public class CreditHistory extends BaseEntity<CreditHistoryId> {
         transactionType = builder.transactionType;
     }
 
+    public static Builder builder() {
+        return Builder.builder();
+    }
 
     public static final class Builder {
         private CreditHistoryId creditHistoryId;
