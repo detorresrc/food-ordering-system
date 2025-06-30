@@ -1,10 +1,14 @@
 package com.detorresrc.foodorderingsystem.order.service.messaging.mapper;
 
 import com.detorresrc.foodorderingsystem.kafka.order.avro.model.*;
+import com.detorresrc.foodorderingsystem.order.service.domain.dto.message.PaymentResponse;
+import com.detorresrc.foodorderingsystem.order.service.domain.dto.message.RestaurantApprovalResponse;
 import com.detorresrc.foodorderingsystem.order.service.domain.entity.Order;
 import com.detorresrc.foodorderingsystem.order.service.domain.event.OrderCancelledEvent;
 import com.detorresrc.foodorderingsystem.order.service.domain.event.OrderCreatedEvent;
 import com.detorresrc.foodorderingsystem.order.service.domain.event.OrderPaidEvent;
+import com.detorresrc.foodorderingsystem.valueobject.OrderApprovalStatus;
+import com.detorresrc.foodorderingsystem.valueobject.PaymentStatus;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
@@ -56,6 +60,34 @@ public class OrderMessagingDataMapper {
             .setPrice(order.getPrice().getValue())
             .setCreatedAt(event.getCreatedAt().toInstant())
             .setRestaurantOrderStatus(RestaurantOrderStatus.PAID)
+            .build();
+    }
+
+    public PaymentResponse
+    paymentResponseAvroModelToPaymentResponse(PaymentResponseAvroModel model) {
+        return PaymentResponse.builder()
+            .id(model.getId().toString())
+            .sagaId(model.getSagaId().toString())
+            .paymentId(model.getPaymentId().toString())
+            .customerId(model.getCustomerId().toString())
+            .orderId(model.getOrderId().toString())
+            .price(model.getPrice())
+            .createdAt(model.getCreatedAt())
+            .paymentStatus(PaymentStatus.valueOf(model.getPaymentStatus().name()))
+            .failureMessages(model.getFailureMessages())
+            .build();
+    }
+
+    public RestaurantApprovalResponse
+    approvalResponseAvroModelToApprovalResponse(RestaurantApprovalResponseAvroModel model) {
+        return RestaurantApprovalResponse.builder()
+            .id(model.getId().toString())
+            .sagaId(model.getSagaId().toString())
+            .restaurantId(model.getRestaurantId().toString())
+            .orderId(model.getOrderId().toString())
+            .createdAt(model.getCreatedAt())
+            .orderApprovalStatus(OrderApprovalStatus.valueOf(model.getOrderApprovalStatus().name()))
+            .failureMessages(model.getFailureMessages())
             .build();
     }
 }

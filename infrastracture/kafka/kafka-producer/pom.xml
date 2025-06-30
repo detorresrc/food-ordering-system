@@ -29,10 +29,6 @@
             <artifactId>order-domain-core</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.detorresrc.foodorderingsystem</groupId>
-            <artifactId>order-domain</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.kafka</groupId>
             <artifactId>spring-kafka</artifactId>
         </dependency>
