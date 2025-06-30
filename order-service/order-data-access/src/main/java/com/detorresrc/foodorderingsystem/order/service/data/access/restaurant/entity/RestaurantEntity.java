@@ -15,7 +15,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Getter
 @Setter
-@Table(name = "order_restaurant_m_view", schema = "restaurants")
+@Table(name = "order_restaurant_m_view", schema = "restaurant")
 @Entity
 @IdClass(RestaurantEntity.class)
 public class RestaurantEntity {
@@ -24,8 +24,8 @@ public class RestaurantEntity {
     @Id
     private UUID productId;
 
-    private String name;
-    private Boolean active;
+    private String restaurantName;
+    private Boolean restaurantActive;
     private String productName;
     private BigDecimal productPrice;
 

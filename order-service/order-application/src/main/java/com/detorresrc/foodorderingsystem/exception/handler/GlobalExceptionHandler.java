@@ -16,19 +16,6 @@ import java.util.stream.Collectors;
 @Slf4j
 @ControllerAdvice
 public class GlobalExceptionHandler {
-
-    @ResponseBody
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler(value = {Exception.class})
-    public ErrorDTO handleException(Exception ex) {
-        log.error(ex.getMessage(), ex);
-
-        return ErrorDTO.builder()
-            .code(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase())
-            .message("Unexpected error occurred: " + ex.getMessage())
-            .build();
-    }
-
     @ResponseBody
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(value = {ValidationException.class})

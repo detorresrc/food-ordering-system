@@ -28,6 +28,7 @@ public class OrderDataAccessMapper {
             .address(deliveryAddressToOrderAddressEntity(order.getDeliveryAddress()))
             .price(order.getPrice().getValue())
             .items(orderItemsToOrderItemEntities(order.getItems()))
+            .orderStatus(order.getOrderStatus())
             .failureMessages(order.getFailureMessages() != null ? String.join(FAILURE_MESSAGE_DELIMITER, order.getFailureMessages()) : null)
             .build();
 
@@ -47,12 +48,15 @@ public class OrderDataAccessMapper {
             .price(new Money(orderEntity.getPrice()))
             .items(orderItemEntityToOrderItems(orderEntity.getItems()))
             .orderStatus(orderEntity.getOrderStatus())
-            .failureMessages(
-                orderEntity.getFailureMessages().isEmpty()
-                    ? new ArrayList<>()
-                    : new ArrayList<>(
-                    List.of(orderEntity.getFailureMessages().split(FAILURE_MESSAGE_DELIMITER))))
+            .failureMessages(orderEntityAddressToFailureMessages(orderEntity))
             .build();
+    }
+
+    public List<String> orderEntityAddressToFailureMessages(OrderEntity orderEntity) {
+        if (orderEntity.getFailureMessages() == null || orderEntity.getFailureMessages().isEmpty()) {
+            return new ArrayList<>();
+        }
+        return List.of(orderEntity.getFailureMessages().split(FAILURE_MESSAGE_DELIMITER));
     }
 
     private List<OrderItem> orderItemEntityToOrderItems(List<OrderItemEntity> items) {
@@ -90,6 +94,7 @@ public class OrderDataAccessMapper {
 
     public OrderAddressEntity deliveryAddressToOrderAddressEntity(StreetAddress address) {
         return OrderAddressEntity.builder()
+            .id(address.getId())
             .street(address.getStreet())
             .postalCode(address.getPostalCode())
             .city(address.getCity())

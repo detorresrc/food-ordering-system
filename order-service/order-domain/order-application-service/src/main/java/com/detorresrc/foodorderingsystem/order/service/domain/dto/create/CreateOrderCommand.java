@@ -4,14 +4,16 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
 @Getter
-@AllArgsConstructor
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor(force = true)
 public class CreateOrderCommand {
     @NotNull
     private final UUID customerId;
