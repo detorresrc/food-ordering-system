@@ -33,6 +33,12 @@ public class KafkaProducerImpl<K extends Serializable, V extends SpecificRecordB
             });
     }
 
+    @Override
+    public CompletableFuture<SendResult<K, V>> send(String topicName, K key, V message) {
+        log.info("Sending message:{} to topic: {}", message, topicName);
+        return kafkaTemplate.send(topicName, key, message);
+    }
+
     @PreDestroy
     public void close() {
         if (kafkaTemplate != null) {
