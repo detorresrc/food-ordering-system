@@ -25,6 +25,8 @@
         <module>common</module>
         <module>infrastracture</module>
         <module>customer-service</module>
+        <module>payment-service</module>
+        <module>payment-service/payment-data-access</module>
     </modules>
 
     <properties>
@@ -75,6 +77,11 @@
             <dependency>
                 <groupId>com.detorresrc.foodorderingsystem</groupId>
                 <artifactId>common-application</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.detorresrc.foodorderingsystem</groupId>
+                <artifactId>payment-domain-core</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

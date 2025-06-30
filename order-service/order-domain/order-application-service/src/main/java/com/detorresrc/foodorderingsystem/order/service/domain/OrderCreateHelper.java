@@ -7,6 +7,7 @@ import com.detorresrc.foodorderingsystem.order.service.domain.entity.Restaurant;
 import com.detorresrc.foodorderingsystem.order.service.domain.event.OrderCreatedEvent;
 import com.detorresrc.foodorderingsystem.order.service.domain.exception.OrderDomainException;
 import com.detorresrc.foodorderingsystem.order.service.domain.mapper.OrderDataMapper;
+import com.detorresrc.foodorderingsystem.order.service.domain.ports.output.message.publisher.payment.OrderCreatedPaymentRequestMessagePublisher;
 import com.detorresrc.foodorderingsystem.order.service.domain.ports.output.repository.CustomerRepository;
 import com.detorresrc.foodorderingsystem.order.service.domain.ports.output.repository.OrderRepository;
 import com.detorresrc.foodorderingsystem.order.service.domain.ports.output.repository.RestaurantRepository;
@@ -28,6 +29,7 @@ public class OrderCreateHelper {
     private final CustomerRepository customerRepository;
     private final RestaurantRepository restaurantRepository;
     private final OrderDataMapper orderDataMapper;
+    private final OrderCreatedPaymentRequestMessagePublisher orderCreatedPaymentRequestMessagePublisher;
 
     @Transactional
     public OrderCreatedEvent persistOrder(CreateOrderCommand command) {
@@ -35,7 +37,8 @@ public class OrderCreateHelper {
         var order = orderDataMapper.createOrderCommandToOrder(command);
         var orderCreateEvent = orderDomainService.validateAndInitializeOrder(
             order,
-            checkRestaurant(command));
+            checkRestaurant(command),
+            orderCreatedPaymentRequestMessagePublisher);
         saveOrder(order);
         log.info("Order with id {} created successfully", order.getId().getValue());
         return orderCreateEvent;

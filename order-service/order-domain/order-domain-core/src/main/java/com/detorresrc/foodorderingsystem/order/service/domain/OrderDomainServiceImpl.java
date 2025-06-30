@@ -1,5 +1,7 @@
 package com.detorresrc.foodorderingsystem.order.service.domain;
 
+import com.detorresrc.foodorderingsystem.DomainConstant;
+import com.detorresrc.foodorderingsystem.event.publisher.DomainEventPublisher;
 import com.detorresrc.foodorderingsystem.order.service.domain.entity.Order;
 import com.detorresrc.foodorderingsystem.order.service.domain.entity.Product;
 import com.detorresrc.foodorderingsystem.order.service.domain.entity.Restaurant;
@@ -15,10 +17,14 @@ import java.util.List;
 
 @Slf4j
 public class OrderDomainServiceImpl implements OrderDomainService {
-    private static final String UTC_ZONE = "UTC";
 
     @Override
-    public OrderCreatedEvent validateAndInitializeOrder(Order order, Restaurant restaurant) {
+    public OrderCreatedEvent validateAndInitializeOrder(
+        Order order,
+        Restaurant restaurant,
+        DomainEventPublisher<OrderCreatedEvent> orderCreatedEventDomainEventPublisher
+    ) {
+
         validateRestaurant(restaurant);
         setOrderProductInformation(order, restaurant);
 
@@ -28,14 +34,14 @@ public class OrderDomainServiceImpl implements OrderDomainService {
         log.info("Order with id: {} is initialized with restaurant: {}",
             order.getId().getValue(), restaurant.getId().getValue());
 
-        return new OrderCreatedEvent(order, ZonedDateTime.now(ZoneId.of(UTC_ZONE)));
+        return new OrderCreatedEvent(order, ZonedDateTime.now(ZoneId.of(DomainConstant.DEFAULT_TIMEZONE)), orderCreatedEventDomainEventPublisher);
     }
 
     @Override
-    public OrderPaidEvent payOrder(Order order) {
+    public OrderPaidEvent payOrder(Order order, DomainEventPublisher<OrderPaidEvent> orderPaidEventDomainEventPublisher) {
         order.pay();
         log.info("Order with id: {} is paid", order.getId().getValue());
-        return new OrderPaidEvent(order, ZonedDateTime.now(ZoneId.of(UTC_ZONE)));
+        return new OrderPaidEvent(order, ZonedDateTime.now(ZoneId.of(DomainConstant.DEFAULT_TIMEZONE)), orderPaidEventDomainEventPublisher);
     }
 
     @Override
@@ -45,10 +51,14 @@ public class OrderDomainServiceImpl implements OrderDomainService {
     }
 
     @Override
-    public OrderCancelledEvent cancelOrderPayment(Order order, List<String> failureMessages) {
+    public OrderCancelledEvent cancelOrderPayment(
+        Order order,
+        List<String> failureMessages,
+        DomainEventPublisher<OrderCancelledEvent> orderCancelledEventDomainEventPublisher) {
+
         order.initCancel(failureMessages);
         log.info("Order payment is cancelling for order with id: {}", order.getId().getValue());
-        return new OrderCancelledEvent(order, ZonedDateTime.now(ZoneId.of(UTC_ZONE)));
+        return new OrderCancelledEvent(order, ZonedDateTime.now(ZoneId.of(DomainConstant.DEFAULT_TIMEZONE)), orderCancelledEventDomainEventPublisher);
     }
 
     @Override
