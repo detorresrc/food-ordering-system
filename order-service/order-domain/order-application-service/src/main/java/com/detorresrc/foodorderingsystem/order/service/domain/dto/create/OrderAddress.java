@@ -10,15 +10,15 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @Builder
-@NoArgsConstructor(force = true)
+@NoArgsConstructor
 public class OrderAddress {
     @NotNull
     @Max(value = 50)
-    private final String street;
+    private String street;
     @NotNull
     @Max(value = 10)
-    private final String postalCode;
+    private String postalCode;
     @NotNull
     @Max(value = 50)
-    private final String city;
+    private String city;
 }
