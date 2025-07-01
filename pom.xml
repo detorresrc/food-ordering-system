@@ -77,6 +77,11 @@
             </dependency>
             <dependency>
                 <groupId>com.detorresrc.foodorderingsystem</groupId>
+                <artifactId>common-data-access</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.detorresrc.foodorderingsystem</groupId>
                 <artifactId>common-application</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -103,6 +108,21 @@
             <dependency>
                 <groupId>com.detorresrc.foodorderingsystem</groupId>
                 <artifactId>restaurant-domain-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.detorresrc.foodorderingsystem</groupId>
+                <artifactId>restaurant-application-service</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.detorresrc.foodorderingsystem</groupId>
+                <artifactId>restaurant-data-access</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.detorresrc.foodorderingsystem</groupId>
+                <artifactId>restaurant-messaging</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

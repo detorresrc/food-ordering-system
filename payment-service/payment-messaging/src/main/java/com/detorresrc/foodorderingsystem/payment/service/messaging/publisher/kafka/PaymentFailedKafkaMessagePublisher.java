@@ -2,6 +2,8 @@ package com.detorresrc.foodorderingsystem.payment.service.messaging.publisher.ka
 
 import com.detorresrc.foodorderingsystem.kafka.order.avro.model.PaymentResponseAvroModel;
 import com.detorresrc.foodorderingsystem.kafka.producer.service.KafkaProducer;
+import com.detorresrc.foodorderingsystem.kafka.producer.service.KafkaProducerMessengerHelper;
+import com.detorresrc.foodorderingsystem.payment.service.domain.config.PaymentServiceConfigData;
 import com.detorresrc.foodorderingsystem.payment.service.domain.event.PaymentFailedEvent;
 import com.detorresrc.foodorderingsystem.payment.service.domain.ports.output.message.publisher.PaymentFailedMessagePublisher;
 import com.detorresrc.foodorderingsystem.payment.service.messaging.mapper.PaymentMessagingDataMapper;
@@ -15,7 +17,8 @@ import org.springframework.stereotype.Component;
 public class PaymentFailedKafkaMessagePublisher implements PaymentFailedMessagePublisher {
     private final PaymentMessagingDataMapper paymentMessagingDataMapper;
     private final KafkaProducer<String, PaymentResponseAvroModel> kafkaProducer;
-    private final PaymentKafkaMessengerHelper paymentKafkaMessengerHelper;
+    private final PaymentServiceConfigData paymentServiceConfigData;
+    private final KafkaProducerMessengerHelper kafkaProducerMessengerHelper;
 
     @Override
     public void publish(PaymentFailedEvent domainEvent) {
@@ -23,8 +26,9 @@ public class PaymentFailedKafkaMessagePublisher implements PaymentFailedMessageP
 
         log.info("Received PaymentFailedEvent for order id: {}", orderId);
 
-        paymentKafkaMessengerHelper.sendWithCallback(
+        kafkaProducerMessengerHelper.sendWithCallback(
             kafkaProducer,
+            paymentServiceConfigData.getPaymentResponseTopicName(),
             orderId,
             paymentMessagingDataMapper.paymentFailedEventToPaymentResponseAvroModel(domainEvent)
         );

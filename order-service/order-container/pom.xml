@@ -18,11 +18,7 @@
     <dependencies>
         <dependency>
             <groupId>com.detorresrc.foodorderingsystem</groupId>
-            <artifactId>order-domain-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.detorresrc.foodorderingsystem</groupId>
-            <artifactId>order-application-service</artifactId>
+            <artifactId>order-domain</artifactId>
         </dependency>
         <dependency>
             <groupId>com.detorresrc.foodorderingsystem</groupId>

@@ -32,6 +32,10 @@
             <groupId>com.detorresrc.foodorderingsystem</groupId>
             <artifactId>kafka-model</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.detorresrc.foodorderingsystem</groupId>
+            <artifactId>common-domain</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

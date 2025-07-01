@@ -1,8 +1,5 @@
-package com.detorresrc.foodorderingsystem.payment.service.messaging.publisher.kafka;
+package com.detorresrc.foodorderingsystem.kafka.producer.service;
 
-import com.detorresrc.foodorderingsystem.kafka.producer.service.KafkaProducer;
-import com.detorresrc.foodorderingsystem.payment.service.domain.config.PaymentServiceConfigData;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.avro.specific.SpecificRecordBase;
 import org.springframework.kafka.support.SendResult;
@@ -10,9 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
-@RequiredArgsConstructor
-public class PaymentKafkaMessengerHelper {
-    private final PaymentServiceConfigData paymentServiceConfigData;
+public final class KafkaProducerMessengerHelper {
 
     public <T> void callback(
         SendResult<String, T> result,
@@ -43,12 +38,13 @@ public class PaymentKafkaMessengerHelper {
 
     public <T extends SpecificRecordBase> void sendWithCallback(
         KafkaProducer<String, T> kafkaProducer,
+        String topicName,
         String orderId,
         T avroModel
     ) {
         String requestAvroModelName = avroModel.getClass().getSimpleName();
         try {
-            kafkaProducer.send(paymentServiceConfigData.getPaymentResponseTopicName(), orderId, avroModel)
+            kafkaProducer.send(topicName, orderId, avroModel)
                 .whenComplete((res, ex) -> {
                     callback(res, ex, orderId);
                 });

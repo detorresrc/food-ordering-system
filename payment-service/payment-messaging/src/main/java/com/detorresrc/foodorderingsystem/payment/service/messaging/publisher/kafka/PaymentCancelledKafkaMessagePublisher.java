@@ -2,6 +2,8 @@ package com.detorresrc.foodorderingsystem.payment.service.messaging.publisher.ka
 
 import com.detorresrc.foodorderingsystem.kafka.order.avro.model.PaymentResponseAvroModel;
 import com.detorresrc.foodorderingsystem.kafka.producer.service.KafkaProducer;
+import com.detorresrc.foodorderingsystem.kafka.producer.service.KafkaProducerMessengerHelper;
+import com.detorresrc.foodorderingsystem.payment.service.domain.config.PaymentServiceConfigData;
 import com.detorresrc.foodorderingsystem.payment.service.domain.event.PaymentCancelledEvent;
 import com.detorresrc.foodorderingsystem.payment.service.domain.ports.output.message.publisher.PaymentCancelledMessagePublisher;
 import com.detorresrc.foodorderingsystem.payment.service.messaging.mapper.PaymentMessagingDataMapper;
@@ -15,7 +17,8 @@ import org.springframework.stereotype.Component;
 public class PaymentCancelledKafkaMessagePublisher implements PaymentCancelledMessagePublisher {
     private final PaymentMessagingDataMapper paymentMessagingDataMapper;
     private final KafkaProducer<String, PaymentResponseAvroModel> kafkaProducer;
-    private final PaymentKafkaMessengerHelper paymentKafkaMessengerHelper;
+    private final PaymentServiceConfigData paymentServiceConfigData;
+    private final KafkaProducerMessengerHelper kafkaProducerMessengerHelper;
 
     @Override
     public void publish(PaymentCancelledEvent domainEvent) {
@@ -23,10 +26,10 @@ public class PaymentCancelledKafkaMessagePublisher implements PaymentCancelledMe
 
         log.info("Received PaymentCancelledEvent for order id: {}", orderId);
 
-        paymentKafkaMessengerHelper.sendWithCallback(
+        kafkaProducerMessengerHelper.sendWithCallback(
             kafkaProducer,
+            paymentServiceConfigData.getPaymentResponseTopicName(),
             orderId,
-            paymentMessagingDataMapper.paymentCancelledEventToPaymentResponseAvroModel(domainEvent)
-        );
+            paymentMessagingDataMapper.paymentCancelledEventToPaymentResponseAvroModel(domainEvent));
     }
 }
