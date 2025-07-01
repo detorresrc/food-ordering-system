@@ -9,12 +9,14 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>infrastracture</artifactId>
+    <artifactId>restaurant-service</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>kafka</module>
-        <module>saga</module>
-        <module>outbox</module>
+        <module>restaurant-container</module>
+        <module>restaurant-data-access</module>
+        <module>restaurant-domain</module>
+        <module>restaurant-messaging</module>
+        <module>restaurant-domain/restaurant-application-service</module>
     </modules>
 
     <properties>

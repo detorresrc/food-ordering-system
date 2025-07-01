@@ -5,17 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.detorresrc.foodorderingsystem</groupId>
-        <artifactId>food-ordering-system</artifactId>
+        <artifactId>restaurant-service</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>infrastracture</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>kafka</module>
-        <module>saga</module>
-        <module>outbox</module>
-    </modules>
+    <artifactId>restaurant-container</artifactId>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
